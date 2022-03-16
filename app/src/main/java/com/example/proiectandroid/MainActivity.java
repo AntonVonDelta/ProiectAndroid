@@ -1,6 +1,7 @@
 package com.example.proiectandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,17 +28,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initImageBitmaps(){
-        storedImagesUrl.add("https://media.farandwide.com/bc/ea/bceaf71ef0c54deea9ca2ed580099c23.jpeg");
+        storedImagesUrl.add("https://media.gettyimages.com/photos/piazza-san-marco-with-the-basilica-of-saint-mark-and-the-bell-tower-picture-id1063633692?k=20&m=1063633692&s=612x612&w=0&h=Um0CwuTZ3c-jSe9VzRYJL2l2meFO0ah8rxHCz2HTgtc=");
         storedImagesText.add("Town 1");
 
-//        storedImagesUrl.add("https://hips.hearstapps.com/clv.h-cdn.co/assets/16/19/1463066333-gettyimages-106523664.jpg");
-//        storedImagesText.add("Town 2");
-//
-//        storedImagesUrl.add("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bridge-over-delaware-river-royalty-free-image-155438790-1531171842.jpg?crop=1.00xw:0.754xh;0,0&resize=480:*");
-//        storedImagesText.add("Town 3");
-//
-//        storedImagesUrl.add("https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2021%2F05%2F07%2Flead-telluride-COLORADOSUMMER0521.jpg");
-//        storedImagesText.add("Town 4");
+        storedImagesUrl.add("https://media.gettyimages.com/photos/dam-square-in-amsterdam-a-town-square-in-the-dutch-capital-dam-square-picture-id1140805773?k=20&m=1140805773&s=612x612&w=0&h=AvYXPlBTszvjQzmwfrE9kgl2LicOdBhTL2uPSnh1bJw=");
+        storedImagesText.add("Town 2");
+
+        storedImagesUrl.add("https://media.gettyimages.com/photos/overcrowded-with-thousands-of-tourists-and-visitors-during-the-in-picture-id1156013362?k=20&m=1156013362&s=612x612&w=0&h=AEdCFU5gE_Ya5MjrRRnB92jl3Wix6O5gqSxclEwPknM=");
+        storedImagesText.add("Town 3");
+
+        storedImagesUrl.add("https://media.gettyimages.com/photos/skiathos-town-on-april-25-2021-in-skiathos-greece-picture-id1314717137?k=20&m=1314717137&s=612x612&w=0&h=Dm0BsbRkybvc6T0IkFtyRc8N1cea-9gbWNdEWV12BVs=");
+        storedImagesText.add("Town 4");
 //
 //        storedImagesUrl.add("https://assets3.thrillist.com/v1/image/2882846/1200x630/flatten;crop_down;webp=auto;jpeg_quality=70");
 //        storedImagesText.add("Town 5");
