@@ -16,8 +16,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    private ArrayList<String> storedImagesUrl=new ArrayList<>();
-    private ArrayList<String> storedImagesText=new ArrayList<>();
+    private ArrayList<RecyclerViewAdapter.EntryData> storedImagesData=new ArrayList<>();
 
 
     @Override
@@ -31,17 +30,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initImageBitmaps(){
-        storedImagesUrl.add("https://media.gettyimages.com/photos/piazza-san-marco-with-the-basilica-of-saint-mark-and-the-bell-tower-picture-id1063633692?k=20&m=1063633692&s=612x612&w=0&h=Um0CwuTZ3c-jSe9VzRYJL2l2meFO0ah8rxHCz2HTgtc=");
-        storedImagesText.add("Town 1");
+        storedImagesData.add(new RecyclerViewAdapter.EntryData(
+                "https://media.gettyimages.com/photos/piazza-san-marco-with-the-basilica-of-saint-mark-and-the-bell-tower-picture-id1063633692?k=20&m=1063633692&s=612x612&w=0&h=Um0CwuTZ3c-jSe9VzRYJL2l2meFO0ah8rxHCz2HTgtc=",
+                "Town 1"));
 
-        storedImagesUrl.add("https://media.gettyimages.com/photos/dam-square-in-amsterdam-a-town-square-in-the-dutch-capital-dam-square-picture-id1140805773?k=20&m=1140805773&s=612x612&w=0&h=AvYXPlBTszvjQzmwfrE9kgl2LicOdBhTL2uPSnh1bJw=");
-        storedImagesText.add("Town 2");
+        storedImagesData.add(new RecyclerViewAdapter.EntryData(
+                "https://media.gettyimages.com/photos/dam-square-in-amsterdam-a-town-square-in-the-dutch-capital-dam-square-picture-id1140805773?k=20&m=1140805773&s=612x612&w=0&h=AvYXPlBTszvjQzmwfrE9kgl2LicOdBhTL2uPSnh1bJw=",
+                "Town 2"));
 
-        storedImagesUrl.add("https://media.gettyimages.com/photos/overcrowded-with-thousands-of-tourists-and-visitors-during-the-in-picture-id1156013362?k=20&m=1156013362&s=612x612&w=0&h=AEdCFU5gE_Ya5MjrRRnB92jl3Wix6O5gqSxclEwPknM=");
-        storedImagesText.add("Town 3");
+        storedImagesData.add(new RecyclerViewAdapter.EntryData(
+                "https://media.gettyimages.com/photos/overcrowded-with-thousands-of-tourists-and-visitors-during-the-in-picture-id1156013362?k=20&m=1156013362&s=612x612&w=0&h=AEdCFU5gE_Ya5MjrRRnB92jl3Wix6O5gqSxclEwPknM=",
+                "Town 3"));
 
-        storedImagesUrl.add("https://media.gettyimages.com/photos/skiathos-town-on-april-25-2021-in-skiathos-greece-picture-id1314717137?k=20&m=1314717137&s=612x612&w=0&h=Dm0BsbRkybvc6T0IkFtyRc8N1cea-9gbWNdEWV12BVs=");
-        storedImagesText.add("Town 4");
+        storedImagesData.add(new RecyclerViewAdapter.EntryData(
+                "https://media.gettyimages.com/photos/skiathos-town-on-april-25-2021-in-skiathos-greece-picture-id1314717137?k=20&m=1314717137&s=612x612&w=0&h=Dm0BsbRkybvc6T0IkFtyRc8N1cea-9gbWNdEWV12BVs=",
+                "Town 4"));
 //
 //        storedImagesUrl.add("https://assets3.thrillist.com/v1/image/2882846/1200x630/flatten;crop_down;webp=auto;jpeg_quality=70");
 //        storedImagesText.add("Town 5");
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRecyclerView(){
         RecyclerView view=findViewById(R.id.recyclerview);
-        RecyclerViewAdapter adapter=new RecyclerViewAdapter(storedImagesText,storedImagesUrl,this);
+        RecyclerViewAdapter adapter=new RecyclerViewAdapter(storedImagesData,this);
 
         view.setAdapter(adapter);
         view.setLayoutManager(new LinearLayoutManager(this));
