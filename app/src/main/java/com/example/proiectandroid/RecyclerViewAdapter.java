@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "RecyclerViewAdapter";
     private ArrayList<String> storedImageNames=new ArrayList<String>();
@@ -64,7 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView image;
+        CircleImageView image;
         TextView imageText;
         RelativeLayout itemLayout;
 
