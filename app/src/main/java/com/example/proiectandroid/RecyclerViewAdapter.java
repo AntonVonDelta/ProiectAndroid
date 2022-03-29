@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -27,11 +28,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
     public static class EntryData{
         String Name;
-        String Image;
+        String ImageUrl;
 
-        public EntryData(String name, String image) {
+        public EntryData(String imageUrl,String name) {
             Name = name;
-            Image = image;
+            ImageUrl = imageUrl;
         }
     }
 
@@ -61,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         Glide.with(context)
                 .asBitmap()
-                .load(storedImageData.get(position).Image)
+                .load(storedImageData.get(position).ImageUrl)
                 .into(holder.image);
 
         holder.imageText.setText(storedImageData.get(position).Name);
@@ -96,7 +97,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 // Show all items and do not filter any
                 result=storedAllImageData;
             }else{
-                result=storedAllImageData.stream().filter((e)->e.Name.contains(charSequence)).collect(Collectors.toList());
+                result=storedAllImageData.stream()
+                        .filter((e)->e.Name.toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)))
+                        .collect(Collectors.toList());
             }
 
             FilterResults filterResults=new FilterResults();
