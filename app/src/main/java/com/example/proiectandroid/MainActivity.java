@@ -17,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private ArrayList<RecyclerViewAdapter.EntryData> storedImagesData=new ArrayList<>();
-
+    private RecyclerView view;
+    private RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +46,14 @@ public class MainActivity extends AppCompatActivity {
         storedImagesData.add(new RecyclerViewAdapter.EntryData(
                 "https://media.gettyimages.com/photos/skiathos-town-on-april-25-2021-in-skiathos-greece-picture-id1314717137?k=20&m=1314717137&s=612x612&w=0&h=Dm0BsbRkybvc6T0IkFtyRc8N1cea-9gbWNdEWV12BVs=",
                 "Town 4"));
-//
-//        storedImagesUrl.add("https://assets3.thrillist.com/v1/image/2882846/1200x630/flatten;crop_down;webp=auto;jpeg_quality=70");
-//        storedImagesText.add("Town 5");
-//
-//        storedImagesUrl.add("https://travel.usnews.com/dims4/USNEWS/79693dc/2147483647/resize/445x280%5E%3E/crop/445x280/quality/85/?url=https://travel.usnews.com/images/GettyImages-169953764_929f2hd.jpg");
-//        storedImagesText.add("Town 6");
+
 
         initRecyclerView();
     }
 
     private void initRecyclerView(){
-        RecyclerView view=findViewById(R.id.recyclerview);
-        RecyclerViewAdapter adapter=new RecyclerViewAdapter(storedImagesData,this);
+        view=findViewById(R.id.recyclerview);
+        adapter=new RecyclerViewAdapter(storedImagesData,this);
 
         view.setAdapter(adapter);
         view.setLayoutManager(new LinearLayoutManager(this));
@@ -77,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
                 return false;
             }
         });

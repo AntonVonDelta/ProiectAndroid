@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -80,22 +83,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public Filter getFilter() {
-
+        return customFilter;
     }
 
     Filter customFilter=new Filter() {
         // This seems to run in the back
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            return null;
+            List<EntryData> result=new ArrayList<>();
+
+            if(charSequence.toString().isEmpty()){
+                // Show all items and do not filter any
+                result=storedAllImageData;
+            }else{
+                result=storedAllImageData.stream().filter((e)->e.Name.contains(charSequence)).collect(Collectors.toList());
+            }
+
+            FilterResults filterResults=new FilterResults();
+            filterResults.values=result;
+            return filterResults;
         }
 
         // This seems to run in the ui
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-
+            storedImageData.clear();
+            storedImageData.addAll((Collection<? extends EntryData>) filterResults.values);
+            notifyDataSetChanged();
         }
-    }
+    };
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
