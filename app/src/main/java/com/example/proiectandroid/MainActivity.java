@@ -1,5 +1,6 @@
 package com.example.proiectandroid;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -15,9 +16,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
     private DrawerLayout drawerLayout;
 
@@ -38,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         drawerLayout=findViewById(R.id.drawer_layout);
+        NavigationView navigationView=findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -104,5 +110,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.nav_add_travel_point:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new TravelPlanningFragment()).commit();
+                break;
+            case R.id.nav_map:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MapFragment()).commit();
+                break;
+        }
+        return true;
     }
 }

@@ -23,13 +23,8 @@
             android:theme="@style/Theme.ProiectAndroid"
             app:popupTheme="@style/Theme.ProiectAndroid" />
 
-<!--        <FrameLayout-->
-<!--            android:id="@+id/fragment_container"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent" />-->
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
