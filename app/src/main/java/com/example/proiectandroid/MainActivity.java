@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -63,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
+            case R.id.nav_all_locations:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AllLocationsFragment()).commit();
+                break;
             case R.id.nav_add_travel_point:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new TravelPlanningFragment()).commit();
                 break;
@@ -70,7 +75,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MapFragment()).commit();
                 break;
             case R.id.nav_share:
-                Toast.makeText(this,"Share pressed",Toast.LENGTH_SHORT).show();
+                Intent shareIntent=new Intent();
+                String data="Travel plan";
+
+                shareIntent.setType("text/plain");
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT,data);
+                startActivity(shareIntent);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

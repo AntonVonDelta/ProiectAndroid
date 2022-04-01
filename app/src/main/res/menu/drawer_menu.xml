@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_add_travel"
             android:title="Add travel point" />
         <item
+            android:id="@+id/nav_all_locations"
+            android:icon="@drawable/ic_baseline_all_inclusive_24"
+            android:title="All Locations" />
+        <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_map"
             android:title="See map" />

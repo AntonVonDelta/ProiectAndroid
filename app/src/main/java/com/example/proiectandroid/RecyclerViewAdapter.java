@@ -27,8 +27,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
     public static class EntryData{
-        String Name;
-        String ImageUrl;
+        public String Name;
+        public String ImageUrl;
 
         public EntryData(String imageUrl,String name) {
             Name = name;
