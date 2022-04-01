@@ -62,20 +62,20 @@ public class TravelPlanningFragment extends Fragment {
 
     private void initImageBitmaps() {
         storedImagesData.add(new RecyclerViewAdapter.EntryData(
-                "https://media.gettyimages.com/photos/piazza-san-marco-with-the-basilica-of-saint-mark-and-the-bell-tower-picture-id1063633692?k=20&m=1063633692&s=612x612&w=0&h=Um0CwuTZ3c-jSe9VzRYJL2l2meFO0ah8rxHCz2HTgtc=",
-                "Town 1"));
+                "https://s.iw.ro/gateway/g/ZmlsZVNvdXJjZT1odHRwJTNBJTJGJTJG/c3RvcmFnZTA2dHJhbnNjb2Rlci5yY3Mt/cmRzLnJvJTJGc3RvcmFnZSUyRjIwMjAl/MkYwNSUyRjE0JTJGMTE4NTY3NV8xMTg1/Njc1X0dldHR5SW1hZ2VzLTExNDQ2NTMx/MTguanBnJnc9NzgwJmg9NDQwJmhhc2g9/MmIzNzNlZTRkNTQ0MjJmYzUzNTAzMjliNTc0N2U0YmY=.thumb.jpg",
+                "Bucuresti"));
 
         storedImagesData.add(new RecyclerViewAdapter.EntryData(
-                "https://media.gettyimages.com/photos/dam-square-in-amsterdam-a-town-square-in-the-dutch-capital-dam-square-picture-id1140805773?k=20&m=1140805773&s=612x612&w=0&h=AvYXPlBTszvjQzmwfrE9kgl2LicOdBhTL2uPSnh1bJw=",
-                "Town 2"));
+                "https://cdn.getyourguide.com/img/tour/5a4b620bcf7b1.jpeg/146.jpg",
+                "Constanta"));
 
         storedImagesData.add(new RecyclerViewAdapter.EntryData(
-                "https://media.gettyimages.com/photos/overcrowded-with-thousands-of-tourists-and-visitors-during-the-in-picture-id1156013362?k=20&m=1156013362&s=612x612&w=0&h=AEdCFU5gE_Ya5MjrRRnB92jl3Wix6O5gqSxclEwPknM=",
-                "Town 3"));
+                "https://cdn.getyourguide.com/img/tour/576be6183665f.jpeg/98.jpg",
+                "Venetia"));
 
         storedImagesData.add(new RecyclerViewAdapter.EntryData(
-                "https://media.gettyimages.com/photos/skiathos-town-on-april-25-2021-in-skiathos-greece-picture-id1314717137?k=20&m=1314717137&s=612x612&w=0&h=Dm0BsbRkybvc6T0IkFtyRc8N1cea-9gbWNdEWV12BVs=",
-                "Town 4"));
+                "https://cdn.getyourguide.com/img/tour/6192d8e53052b.jpeg/145.jpg",
+                "Brasov"));
 
 
         initRecyclerView();
