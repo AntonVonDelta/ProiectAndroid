@@ -1,7 +1,6 @@
 package com.example.proiectandroid.Services;
 
 import com.example.proiectandroid.Adapters.EntryData;
-import com.example.proiectandroid.Adapters.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.Optional;

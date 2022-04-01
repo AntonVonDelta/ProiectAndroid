@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,15 +15,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.proiectandroid.Adapters.RecyclerViewAdapter;
+import com.example.proiectandroid.Adapters.StaticRecyclerViewAdapter;
 import com.example.proiectandroid.Services.LocationsService;
 import com.example.proiectandroid.Services.TravelService;
 
-import java.util.ArrayList;
-
 public class AllLocationsFragment extends Fragment implements OnItemClicked {
     private RecyclerView recyclerView;
-    private RecyclerViewAdapter adapter;
+    private StaticRecyclerViewAdapter adapter;
 
     private View view;
     private LocationsService locationsService;
@@ -70,7 +67,7 @@ public class AllLocationsFragment extends Fragment implements OnItemClicked {
 
     private void initRecyclerView() {
         recyclerView = view.findViewById(R.id.recyclerview);
-        adapter = new RecyclerViewAdapter(locationsService.getAllLocations(), getActivity(),this);
+        adapter = new StaticRecyclerViewAdapter(locationsService.getAllLocations(), getActivity(),this);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

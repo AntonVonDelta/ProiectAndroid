@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,35 +27,30 @@ import java.util.stream.Collectors;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
-
-
-    private static final String TAG = "RecyclerViewAdapter";
+public class DeletableRecyclerViewAdapter extends RecyclerView.Adapter<DeletableRecyclerViewAdapter.ViewHolder> implements Filterable {
     private ArrayList<EntryData> storedImageData =new ArrayList<EntryData>();
     private ArrayList<EntryData> storedAllImageData =new ArrayList<EntryData>();
 
     private Context context;
-    private OnItemClicked clickEvent;
+    private OnItemClicked deleteClick;
 
-    public RecyclerViewAdapter(ArrayList<EntryData> storedImageData, Context context, OnItemClicked clickEvent) {
+    public DeletableRecyclerViewAdapter(ArrayList<EntryData> storedImageData, Context context, OnItemClicked deleteClick) {
         this.storedImageData = storedImageData;
         this.storedAllImageData=new ArrayList<>(storedImageData);
         this.context = context;
-        this.clickEvent=clickEvent;
+        this.deleteClick=deleteClick;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_deletablelistitem, parent,false);
         ViewHolder holder=new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Log.d(TAG, "onBindViewHolder: called");
-
         Glide.with(context)
                 .asBitmap()
                 .load(storedImageData.get(position).ImageUrl)
@@ -64,8 +59,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.imageText.setText(storedImageData.get(position).Name);
 
         // Handle click event
-        holder.itemLayout.setOnClickListener(view -> {
-            clickEvent.onItemClicked(position);
+        holder.deleteView.setOnClickListener(view -> {
+            deleteClick.onItemClicked(position);
         });
     }
 
@@ -113,6 +108,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         CircleImageView image;
         TextView imageText;
         RelativeLayout itemLayout;
+        ImageView deleteView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -120,6 +116,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             image=itemView.findViewById(R.id.image);
             imageText=itemView.findViewById(R.id.imageText);
             itemLayout=itemView.findViewById(R.id.layout_parent);
+            deleteView=itemView.findViewById(R.id.delete);
         }
     }
 
