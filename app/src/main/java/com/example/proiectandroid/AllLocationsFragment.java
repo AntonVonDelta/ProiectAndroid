@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proiectandroid.Adapters.RecyclerViewAdapter;
 import com.example.proiectandroid.Services.LocationsService;
+import com.example.proiectandroid.Services.TravelService;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,6 @@ public class AllLocationsFragment extends Fragment implements OnItemClicked {
     }
 
     private void initRecyclerView() {
-
         recyclerView = view.findViewById(R.id.recyclerview);
         adapter = new RecyclerViewAdapter(locationsService.getAllLocations(), getActivity(),this);
 
@@ -78,6 +78,7 @@ public class AllLocationsFragment extends Fragment implements OnItemClicked {
 
     @Override
     public void onItemClicked(int position) {
-        Toast.makeText(getActivity(), "A", Toast.LENGTH_SHORT);
+        TravelService travelService=TravelService.getInstance();
+        travelService.addDestination(locationsService.getAllLocations().get(position).Name);
     }
 }

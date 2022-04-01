@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proiectandroid.Adapters.RecyclerViewAdapter;
+import com.example.proiectandroid.Services.LocationsService;
 import com.example.proiectandroid.Services.TravelService;
 
 public class TravelPlanningFragment extends Fragment implements OnItemClicked {
@@ -67,7 +68,7 @@ public class TravelPlanningFragment extends Fragment implements OnItemClicked {
 
     private void initRecyclerView() {
         recyclerView = view.findViewById(R.id.recyclerview);
-        adapter = new RecyclerViewAdapter(travelService.getDestinationsAsEntryData(), getActivity(),this);
+        adapter = new RecyclerViewAdapter(travelService.getDestinationsAsEntryData(), getActivity(), this);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -75,6 +76,6 @@ public class TravelPlanningFragment extends Fragment implements OnItemClicked {
 
     @Override
     public void onItemClicked(int position) {
-        Toast.makeText(getActivity(), "B", Toast.LENGTH_SHORT);
+        travelService.removeDestination(position);
     }
 }

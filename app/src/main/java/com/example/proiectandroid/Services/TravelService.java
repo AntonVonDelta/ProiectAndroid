@@ -30,6 +30,9 @@ public class TravelService {
     public void removeDestination(String location){
         destinations.removeIf(el->el.toLowerCase(Locale.ROOT).equals(location.toLowerCase(Locale.ROOT)));
     }
+    public void removeDestination(int position){
+        destinations.remove(position);
+    }
 
     public List<String> getDestinations(){
         return destinations;
