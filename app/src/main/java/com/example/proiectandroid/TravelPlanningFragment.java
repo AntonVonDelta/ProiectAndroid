@@ -62,19 +62,21 @@ public class TravelPlanningFragment extends Fragment {
             }
         });
 
-        search.setOnSearchClickListener(new View.OnClickListener() {
+        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onMenuItemActionExpand(MenuItem item) {
                 adapter.hideDeleteButton(true);
+                return true;
             }
-        });
-        search.setOnCloseListener(new SearchView.OnCloseListener() {
+
             @Override
-            public boolean onClose() {
+            public boolean onMenuItemActionCollapse(MenuItem item) {
                 adapter.hideDeleteButton(false);
-                return false;
+                adapter.notifyDataSetChanged();
+                return true;
             }
         });
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 

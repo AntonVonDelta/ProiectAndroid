@@ -63,6 +63,8 @@ public class DeletableRecyclerViewAdapter extends RecyclerView.Adapter<Deletable
         // Hide the delete button if requested
         if(hideDeleteButton){
             holder.deleteView.setVisibility(View.INVISIBLE);
+        }else{
+            holder.deleteView.setVisibility(View.VISIBLE);
         }
 
         // Handle click event
