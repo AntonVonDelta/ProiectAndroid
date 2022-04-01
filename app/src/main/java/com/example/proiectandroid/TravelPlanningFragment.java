@@ -62,7 +62,7 @@ public class TravelPlanningFragment extends Fragment {
 
     private void initImageBitmaps() {
         storedImagesData.add(new RecyclerViewAdapter.EntryData(
-                "https://s.iw.ro/gateway/g/ZmlsZVNvdXJjZT1odHRwJTNBJTJGJTJG/c3RvcmFnZTA2dHJhbnNjb2Rlci5yY3Mt/cmRzLnJvJTJGc3RvcmFnZSUyRjIwMjAl/MkYwNSUyRjE0JTJGMTE4NTY3NV8xMTg1/Njc1X0dldHR5SW1hZ2VzLTExNDQ2NTMx/MTguanBnJnc9NzgwJmg9NDQwJmhhc2g9/MmIzNzNlZTRkNTQ0MjJmYzUzNTAzMjliNTc0N2U0YmY=.thumb.jpg",
+                "https://cdn.getyourguide.com/img/tour/5d9f061aefc81.jpeg/98.jpg",
                 "Bucuresti"));
 
         storedImagesData.add(new RecyclerViewAdapter.EntryData(
@@ -76,6 +76,15 @@ public class TravelPlanningFragment extends Fragment {
         storedImagesData.add(new RecyclerViewAdapter.EntryData(
                 "https://cdn.getyourguide.com/img/tour/6192d8e53052b.jpeg/145.jpg",
                 "Brasov"));
+
+        storedImagesData.add(new RecyclerViewAdapter.EntryData(
+                "https://cdn.getyourguide.com/img/tour/514c74ece075f.jpeg/98.jpg",
+                "Cluj"));
+
+        storedImagesData.add(new RecyclerViewAdapter.EntryData(
+                "https://cdn.getyourguide.com/img/tour/617f4ef62f911.jpeg/98.jpg",
+                "Miami"));
+
 
 
         initRecyclerView();
