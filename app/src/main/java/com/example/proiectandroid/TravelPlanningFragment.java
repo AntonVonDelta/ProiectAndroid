@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.proiectandroid.Adapters.DeletableRecyclerViewAdapter;
 import com.example.proiectandroid.Services.TravelService;
 
-public class TravelPlanningFragment extends Fragment implements OnItemClicked {
+public class TravelPlanningFragment extends Fragment {
     private RecyclerView recyclerView;
     private DeletableRecyclerViewAdapter adapter;
 
@@ -66,14 +66,9 @@ public class TravelPlanningFragment extends Fragment implements OnItemClicked {
 
     private void initRecyclerView() {
         recyclerView = view.findViewById(R.id.recyclerview);
-        adapter = new DeletableRecyclerViewAdapter(travelService.getDestinationsAsEntryData(), getActivity(), this);
+        adapter = new DeletableRecyclerViewAdapter(getActivity());
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    }
-
-    @Override
-    public void onItemClicked(int position) {
-        travelService.removeDestination(position);
     }
 }
