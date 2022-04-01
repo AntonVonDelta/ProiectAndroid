@@ -36,7 +36,7 @@ public class AllLocationsFragment extends Fragment implements OnItemClicked {
         locationsService = LocationsService.getInstance();
 
         // Inflate view
-        view = inflater.inflate(R.layout.fragment_travel_planning, container, false);
+        view = inflater.inflate(R.layout.fragment_all_locations, container, false);
 
         // Initialize the data
         initRecyclerView();
