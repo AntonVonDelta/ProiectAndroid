@@ -1,6 +1,7 @@
 package com.example.proiectandroid.Services;
 
-import com.example.proiectandroid.RecyclerViewAdapter;
+import com.example.proiectandroid.Adapters.EntryData;
+import com.example.proiectandroid.Adapters.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +35,9 @@ public class TravelService {
         return destinations;
     }
 
-    public ArrayList<RecyclerViewAdapter.EntryData> getDestinationsAsEntryData(){
+    public ArrayList<EntryData> getDestinationsAsEntryData(){
         LocationsService locationsService=LocationsService.getInstance();
-        return (ArrayList<RecyclerViewAdapter.EntryData>) destinations.stream().map(el->locationsService.getDataFromLocation(el).get()).collect(Collectors.toList());
+        return (ArrayList<EntryData>) destinations.stream().map(el->locationsService.getDataFromLocation(el).get()).collect(Collectors.toList());
     }
 
 }

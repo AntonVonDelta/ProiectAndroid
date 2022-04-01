@@ -1,4 +1,4 @@
-package com.example.proiectandroid;
+package com.example.proiectandroid.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.proiectandroid.OnItemClicked;
+import com.example.proiectandroid.R;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,26 +28,20 @@ import java.util.stream.Collectors;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
-    public static class EntryData{
-        public String Name;
-        public String ImageUrl;
 
-        public EntryData(String imageUrl,String name) {
-            Name = name;
-            ImageUrl = imageUrl;
-        }
-    }
 
     private static final String TAG = "RecyclerViewAdapter";
     private ArrayList<EntryData> storedImageData =new ArrayList<EntryData>();
     private ArrayList<EntryData> storedAllImageData =new ArrayList<EntryData>();
 
     private Context context;
+    private OnItemClicked clickEvent;
 
-    public RecyclerViewAdapter(ArrayList<EntryData> storedImageData, Context context) {
+    public RecyclerViewAdapter(ArrayList<EntryData> storedImageData, Context context, OnItemClicked clickEvent) {
         this.storedImageData = storedImageData;
         this.storedAllImageData=new ArrayList<>(storedImageData);
         this.context = context;
+        this.clickEvent=clickEvent;
     }
 
     @NonNull
@@ -67,13 +63,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.imageText.setText(storedImageData.get(position).Name);
 
-        holder.itemLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on image " + storedImageData.get(position).Name);
-
-                Toast.makeText(context, storedImageData.get(position).Name,Toast.LENGTH_SHORT).show();
-            }
+        // Handle click event
+        holder.itemLayout.setOnClickListener(view -> {
+            clickEvent.onItemClicked(position);
         });
     }
 
