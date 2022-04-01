@@ -33,8 +33,11 @@ public class DeletableRecyclerViewAdapter extends RecyclerView.Adapter<Deletable
 
     private Context context;
     private TravelService travelService;
+    private boolean hideDeleteButton=false;
 
     public DeletableRecyclerViewAdapter(Context context) {
+        travelService=TravelService.getInstance();
+
         this.storedImageData = travelService.getDestinationsAsEntryData();
         this.context = context;
         travelService=TravelService.getInstance();
@@ -57,6 +60,11 @@ public class DeletableRecyclerViewAdapter extends RecyclerView.Adapter<Deletable
 
         holder.imageText.setText(storedImageData.get(position).Name);
 
+        // Hide the delete button if requested
+        if(hideDeleteButton){
+            holder.deleteView.setVisibility(View.INVISIBLE);
+        }
+
         // Handle click event
         holder.deleteView.setOnClickListener(view -> {
             // Remove location from global service
@@ -64,7 +72,7 @@ public class DeletableRecyclerViewAdapter extends RecyclerView.Adapter<Deletable
 
             // Update internal state
             storedImageData = travelService.getDestinationsAsEntryData();
-            notifyItemChanged(position);
+            notifyDataSetChanged();
         });
     }
 
@@ -109,6 +117,9 @@ public class DeletableRecyclerViewAdapter extends RecyclerView.Adapter<Deletable
         return customFilter;
     }
 
+    public void hideDeleteButton(boolean flag){
+        hideDeleteButton=flag;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView image;
