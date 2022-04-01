@@ -19,9 +19,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.proiectandroid.Services.TravelService;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
@@ -76,7 +78,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_share:
                 Intent shareIntent=new Intent();
-                String data="Travel plan";
+                String data="Travel plan: ";
+
+                TravelService travelService=TravelService.getInstance();
+                data+=travelService.getDestinations().stream().collect(Collectors.joining(", "));
 
                 shareIntent.setType("text/plain");
                 shareIntent.setAction(Intent.ACTION_SEND);
