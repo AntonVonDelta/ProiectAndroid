@@ -16,6 +16,10 @@
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_map"
             android:title="See map" />
+        <item
+            android:id="@+id/nav_video"
+            android:icon="@drawable/ic_baseline_slow_motion_video_24"
+            android:title="See tutorial" />
 
     </group>
 

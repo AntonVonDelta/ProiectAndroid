@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_allLocationsFragment_to_travelPlanningFragment"
             app:destination="@id/travelPlanningFragment" />
+        <action
+            android:id="@+id/action_allLocationsFragment_to_videoTutorialFragment"
+            app:destination="@id/videoTutorialFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
@@ -24,4 +27,9 @@
         android:id="@+id/travelPlanningFragment"
         android:name="com.example.proiectandroid.Fragments.TravelPlanningFragment"
         android:label="TravelPlanningFragment" />
+    <fragment
+        android:id="@+id/videoTutorialFragment"
+        android:name="com.example.proiectandroid.Fragments.VideoTutorialFragment"
+        android:label="fragment_video_tutorial"
+        tools:layout="@layout/fragment_video_tutorial" />
 </navigation>

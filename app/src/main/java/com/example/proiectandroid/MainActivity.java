@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.example.proiectandroid.Fragments.AllLocationsFragment;
 import com.example.proiectandroid.Fragments.TravelPlanningFragment;
+import com.example.proiectandroid.Fragments.VideoTutorialFragment;
 import com.example.proiectandroid.Services.TravelService;
 import com.google.android.material.navigation.NavigationView;
 
@@ -71,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_map:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
+                break;
+            case R.id.nav_video:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VideoTutorialFragment()).commit();
                 break;
             case R.id.nav_share:
                 Intent shareIntent = new Intent();

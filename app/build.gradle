@@ -28,12 +28,16 @@ android {
 }
 
 dependencies {
+    // MJPEG
+    implementation 'com.github.niqdev:ipcam-view:2.3.4'
+
     //round image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     implementation 'androidx.navigation:navigation-runtime:2.3.5'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
     implementation "androidx.navigation:navigation-fragment:2.4.1"
