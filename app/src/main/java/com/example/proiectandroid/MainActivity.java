@@ -49,12 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-        // Select default fragment while also accounting for rotation
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TravelPlanningFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_add_travel_point);
-        }
     }
 
     @Override
