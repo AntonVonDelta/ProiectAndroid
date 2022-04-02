@@ -1,5 +1,6 @@
-package com.example.proiectandroid;
+package com.example.proiectandroid.Fragments;
 
+import android.app.PendingIntent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,13 +12,21 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDeepLinkBuilder;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proiectandroid.Adapters.StaticRecyclerViewAdapter;
+import com.example.proiectandroid.MainActivity;
+import com.example.proiectandroid.OnItemClicked;
+import com.example.proiectandroid.R;
 import com.example.proiectandroid.Services.LocationsService;
 import com.example.proiectandroid.Services.TravelService;
+
+import java.util.Random;
 
 public class AllLocationsFragment extends Fragment implements OnItemClicked {
     private RecyclerView recyclerView;
@@ -77,5 +86,23 @@ public class AllLocationsFragment extends Fragment implements OnItemClicked {
     public void onItemClicked(int position) {
         TravelService travelService=TravelService.getInstance();
         travelService.addDestination(locationsService.getAllLocations().get(position).Name);
+
+        PendingIntent pendingIntent = new NavDeepLinkBuilder(getContext())
+                .setGraph(R.navigation.app_nav)
+                .setDestination(R.id.travelPlanningFragment)
+                .createPendingIntent();
+
+
+        NotificationCompat.Builder builder=new NotificationCompat.Builder(getContext(), MainActivity.CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_map)
+                .setContentTitle("Added destination")
+                .setContentText(locationsService.getAllLocations().get(position).Name)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(new Random().nextInt(), builder.build());
     }
 }

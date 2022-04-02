@@ -1,4 +1,4 @@
-package com.example.proiectandroid;
+package com.example.proiectandroid.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proiectandroid.Adapters.DeletableRecyclerViewAdapter;
+import com.example.proiectandroid.R;
 import com.example.proiectandroid.Services.TravelService;
 
 public class TravelPlanningFragment extends Fragment {
