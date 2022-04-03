@@ -1,5 +1,9 @@
 package com.example.proiectandroid.Services;
 
+import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
+
+import android.database.sqlite.SQLiteDatabase;
+
 import com.example.proiectandroid.Adapters.EntryData;
 import com.example.proiectandroid.Adapters.ExtendedData;
 
@@ -11,7 +15,6 @@ import java.util.stream.Collectors;
 public class LocationsService {
     private static LocationsService instance;
     private ArrayList<ExtendedData> storedImagesData = new ArrayList<>();
-
 
     private LocationsService() {
         storedImagesData.add(new ExtendedData(

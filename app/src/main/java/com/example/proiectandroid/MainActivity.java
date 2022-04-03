@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static String CHANNEL_ID = "travelAppChannel";
+    private static Context applicationContext;
 
     private static final String TAG = "MainActivity";
     private DrawerLayout drawerLayout;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        applicationContext=getApplicationContext();
 
         Log.d(TAG, "onCreate: started");
 
@@ -107,6 +111,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    public static Context getInstanceApplicationContext(){
+        return applicationContext;
     }
 
 }
