@@ -1,3 +1,11 @@
 https://cdn.getyourguide.com/img/tour/5d9f061aefc81.jpeg/98.jpg
 Bacau
 http://93.161.97.219:81/videostream.cgi?user=admin&pwd=
+
+https://cdn.getyourguide.com/img/tour/618b02ede70a9.jpeg/98.jpg
+Peru
+http://93.211.101.11:80/videostream.cgi?user=admin&pwd=
+
+https://cdn.getyourguide.com/img/tour/618b02fe0c95f.jpeg/53.jpg
+Spania
+http://78.226.252.103:80/videostream.cgi?user=admin&pwd=
