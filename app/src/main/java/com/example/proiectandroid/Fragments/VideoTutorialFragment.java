@@ -21,12 +21,14 @@ import com.github.niqdev.mjpeg.MjpegSurfaceView;
 import com.github.niqdev.mjpeg.MjpegView;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Observable;
 import java.util.Optional;
 
 import rx.Subscription;
 
 public class VideoTutorialFragment extends Fragment {
     private View view;
+    private Subscription videoSubscription;
 
     public VideoTutorialFragment() {
     }
@@ -55,25 +57,28 @@ public class VideoTutorialFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.toString().isEmpty()) {
+                    if (videoSubscription != null) videoSubscription.unsubscribe();
                     mjpegView.stopPlayback();
                     mjpegView.setVisibility(View.INVISIBLE);
                 } else {
-                    LocationsService locationsService=LocationsService.getInstance();
-                    Optional<String> videoUrl=locationsService.getVideoUrlFromLocation(editable.toString());
+                    LocationsService locationsService = LocationsService.getInstance();
+                    Optional<String> videoUrl = locationsService.getVideoUrlFromLocation(editable.toString());
 
-                    if(videoUrl.isPresent()){
-                        try{
+                    if (videoUrl.isPresent()) {
+                        try {
+                            if (videoSubscription != null) videoSubscription.unsubscribe();
                             mjpegView.stopPlayback();
-                            Mjpeg.newInstance()
-                                    .open(videoUrl.get(),5)
+                            mjpegView.setVisibility(View.VISIBLE);
+
+                            videoSubscription = Mjpeg.newInstance()
+                                    .open(videoUrl.get(), 5)
                                     .subscribe(inputStream -> {
                                         mjpegView.setSource(inputStream);
                                         mjpegView.setDisplayMode(DisplayMode.BEST_FIT);
                                     });
 
-                            mjpegView.setVisibility(View.VISIBLE);
-                        }catch(Exception ex){
-
+                        } catch (Exception ex) {
+                            mjpegView.setVisibility(View.INVISIBLE);
                         }
                     }
                 }
@@ -86,7 +91,7 @@ public class VideoTutorialFragment extends Fragment {
 
     @Override
     public void onStop() {
-        Log.d("Video","stopped");
+        Log.d("Video", "stopped");
 
         MjpegSurfaceView mjpegView = view.findViewById(R.id.video);
         mjpegView.stopPlayback();

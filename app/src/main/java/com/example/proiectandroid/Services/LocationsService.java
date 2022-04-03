@@ -142,7 +142,7 @@ public class LocationsService {
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
+                        Log.d("Location Service","failure call 2");
                     }
                 });
 
@@ -150,6 +150,7 @@ public class LocationsService {
 
             @Override
             public void onFailure(Call<List<GithubBranch>> call, Throwable t) {
+                Log.d("Location Service","failure call 1");
 
             }
         });
