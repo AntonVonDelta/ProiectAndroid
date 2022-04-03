@@ -3,9 +3,11 @@
     package="com.example.proiectandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -16,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProiectAndroid"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
