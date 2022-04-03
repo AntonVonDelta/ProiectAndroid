@@ -4,23 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".LoginActivity"
+    android:layout_gravity="center"
     android:orientation="vertical"
-    android:layout_gravity="center">
+    tools:context=".LoginActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to the Travel App"
         android:layout_gravity="center"
-        />
+        android:textSize="25sp"
+        android:layout_marginBottom="50dp"
+        android:text="Welcome to the Travel App"
+        android:fontFamily="serif"
+        android:textStyle="bold"/>
+
 
     <Button
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login with Google"
         android:layout_gravity="center"
-        />
+        android:text="Login with Google" />
+
 
 </LinearLayout>

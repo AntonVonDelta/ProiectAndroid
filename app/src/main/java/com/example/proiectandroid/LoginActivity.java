@@ -44,8 +44,9 @@ public class LoginActivity extends AppCompatActivity {
                 // Automatically sign in when exactly one credential is retrieved.
                 //.setAutoSelectEnabled(true)
                 .build();
+    }
 
-
+    private void loginUser(){
         oneTapClient.beginSignIn(signInRequest)
                 .addOnSuccessListener(this, new OnSuccessListener<BeginSignInResult>() {
                     @Override
