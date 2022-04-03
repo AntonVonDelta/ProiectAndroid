@@ -21,6 +21,10 @@
             android:icon="@drawable/ic_baseline_slow_motion_video_24"
             android:title="See live places" />
 
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_baseline_camera_24"
+            android:title="Record your experience" />
     </group>
 
     <item android:title="Sharing">

@@ -1,12 +1,21 @@
 package com.example.proiectandroid.Fragments;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,73 +28,98 @@ import com.example.proiectandroid.Adapters.DeletableRecyclerViewAdapter;
 import com.example.proiectandroid.R;
 import com.example.proiectandroid.Services.TravelService;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.net.URI;
+
 public class RecordExperienceFragment extends Fragment {
-    private RecyclerView recyclerView;
-    private DeletableRecyclerViewAdapter adapter;
+    private int VIDEO_REQUEST = 101;
 
     private View view;
-    private TravelService travelService;
+    private Uri videoUri;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Signal that we have "options"
-        setHasOptionsMenu(true);
-
-        // Load travel service
-        travelService = TravelService.getInstance();
-
         // Inflate view
-        view = inflater.inflate(R.layout.fragment_travel_planning, container, false);
+        view = inflater.inflate(R.layout.fragment_experience, container, false);
 
-        // Initialize the data
-        initRecyclerView();
+        Button recordButton = view.findViewById(R.id.record);
+        Button playbackButton = view.findViewById(R.id.play);
 
+        recordButton.setOnClickListener(v -> recordVideo());
+        playbackButton.setOnClickListener(v -> playbackVideo());
         return view;
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        SearchView search = (SearchView) item.getActionView();
+    public void onPause() {
+        VideoView videoHolder = view.findViewById(R.id.video_holder);
+        videoHolder.stopPlayback();
 
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-
-        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                adapter.hideDeleteButton(true);
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                adapter.hideDeleteButton(false);
-                adapter.notifyDataSetChanged();
-                return true;
-            }
-        });
-
-        super.onCreateOptionsMenu(menu, inflater);
+        super.onPause();
     }
 
-    private void initRecyclerView() {
-        recyclerView = view.findViewById(R.id.recyclerview);
-        adapter = new DeletableRecyclerViewAdapter(getActivity());
+    private void recordVideo() {
+        Intent videoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (videoIntent.resolveActivity(getActivity().getPackageManager()) == null) {
+            return;
+        }
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // Start recording
+        startActivityForResult(videoIntent, VIDEO_REQUEST);
+    }
+
+    private void playbackVideo() {
+        VideoView videoHolder = view.findViewById(R.id.video_holder);
+
+        File newfile = new File(getActivity().getExternalFilesDir(null), "saved_video.mp4");
+        if (!newfile.exists()) return;
+
+        videoHolder.setVideoURI(Uri.fromFile(newfile));
+        videoHolder.start();
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == VIDEO_REQUEST && resultCode == RESULT_OK) {
+            videoUri = data.getData();
+
+            saveVideoData(data);
+        }
+    }
+
+
+    private void saveVideoData(Intent data) {
+        try {
+            // Store locally
+            //https://stackoverflow.com/questions/41606939/android-saving-video-to-internal-storage
+            File newfile;
+
+            AssetFileDescriptor videoAsset = getActivity().getContentResolver().openAssetFileDescriptor(data.getData(), "r");
+            FileInputStream in = videoAsset.createInputStream();
+
+            newfile = new File(getActivity().getExternalFilesDir(null), "saved_video.mp4");
+            if (newfile.exists()) newfile.delete();
+            else newfile.createNewFile();
+
+            OutputStream out = new FileOutputStream(newfile);
+
+            // Copy the bits from instream to outstream
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+
+            in.close();
+            out.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

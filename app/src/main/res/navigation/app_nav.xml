@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_allLocationsFragment_to_videoTutorialFragment"
             app:destination="@id/videoTutorialFragment" />
+        <action
+            android:id="@+id/action_allLocationsFragment_to_recordExperienceFragment"
+            app:destination="@id/recordExperienceFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
@@ -32,4 +35,8 @@
         android:name="com.example.proiectandroid.Fragments.VideoTutorialFragment"
         android:label="fragment_video_tutorial"
         tools:layout="@layout/fragment_video_tutorial" />
+    <fragment
+        android:id="@+id/recordExperienceFragment"
+        android:name="com.example.proiectandroid.Fragments.RecordExperienceFragment"
+        android:label="RecordExperienceFragment" />
 </navigation>
