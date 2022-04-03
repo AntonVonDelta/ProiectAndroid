@@ -8,11 +8,30 @@ import com.example.proiectandroid.Adapters.EntryData;
 import com.example.proiectandroid.Adapters.ExtendedData;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+
 public class LocationsService {
+    public class GitHubRepo {
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    public interface GitHubService {
+        @GET("users/{user}/repos")
+        Call<List<GitHubRepo>> listRepos(@Path("user") String user);
+    }
+
     private static LocationsService instance;
     private ArrayList<ExtendedData> storedImagesData = new ArrayList<>();
 
@@ -46,6 +65,14 @@ public class LocationsService {
                 "https://cdn.getyourguide.com/img/tour/617f4ef62f911.jpeg/98.jpg",
                 "Miami",
                 ""));
+
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .build();
+
+        GitHubService service = retrofit.create(GitHubService.class);
     }
 
     public static LocationsService getInstance() {
