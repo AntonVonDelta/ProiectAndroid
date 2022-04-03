@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,10 +18,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.proiectandroid.Events.EventChange;
 import com.example.proiectandroid.Fragments.AllLocationsFragment;
 import com.example.proiectandroid.Fragments.RecordExperienceFragment;
 import com.example.proiectandroid.Fragments.TravelPlanningFragment;
 import com.example.proiectandroid.Fragments.VideoTutorialFragment;
+import com.example.proiectandroid.Services.LocationsService;
 import com.example.proiectandroid.Services.TravelService;
 import com.google.android.material.navigation.NavigationView;
 
@@ -37,9 +41,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        applicationContext=getApplicationContext();
+        applicationContext = getApplicationContext();
 
         Log.d(TAG, "onCreate: started");
+
+//        LocationsService locationsService = LocationsService.getInstance();
+//        locationsService.addChangeListener(new EventChange() {
+//            @Override
+//            public void eventChange(Object data) {
+//                // Refresh the all locations fragment if the list changes
+//                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+//
+//                if (currentFragment instanceof AllLocationsFragment) {
+//                    FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+//                    fragTransaction.detach(currentFragment);
+//                    fragTransaction.attach(currentFragment);
+//                    fragTransaction.commit();
+//                }
+//            }
+//        });
 
         // Create notification channel
         createNotificationChannel();
@@ -117,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public static Context getInstanceApplicationContext(){
+    public static Context getInstanceApplicationContext() {
         return applicationContext;
     }
 

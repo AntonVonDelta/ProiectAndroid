@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proiectandroid.Adapters.StaticRecyclerViewAdapter;
+import com.example.proiectandroid.Events.EventChange;
 import com.example.proiectandroid.MainActivity;
 import com.example.proiectandroid.OnItemClicked;
 import com.example.proiectandroid.R;
@@ -43,7 +44,13 @@ public class AllLocationsFragment extends Fragment implements OnItemClicked {
 
         // Load all locations service
         locationsService = LocationsService.getInstance();
-
+        locationsService.addChangeListener(new EventChange() {
+            @Override
+            public void eventChange(Object data) {
+                // Recreate the view and adapter
+                initRecyclerView();
+            }
+        });
         // Inflate view
         view = inflater.inflate(R.layout.fragment_all_locations, container, false);
 
