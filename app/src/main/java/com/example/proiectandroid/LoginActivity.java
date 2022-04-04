@@ -1,33 +1,24 @@
 package com.example.proiectandroid;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.IntentSender;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import com.google.android.gms.auth.api.identity.BeginSignInRequest;
-import com.google.android.gms.auth.api.identity.BeginSignInResult;
-import com.google.android.gms.auth.api.identity.Identity;
-import com.google.android.gms.auth.api.identity.SignInClient;
-import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "Login";
-    private static final int REQ_ONE_TAP = 2;
+    private static final int RC_SIGN_IN = 2;
 
-    private SignInClient oneTapClient;
-    private BeginSignInRequest signInRequest;
+    private GoogleSignInClient googleClient;
 
 
     @Override
@@ -35,28 +26,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+        findViewById(R.id.login_button).setOnClickListener(el -> signIn());
 
-        // Taken from google official sources...a nice way of saying I copy-pasted it
-        oneTapClient = Identity.getSignInClient(this);
-        signInRequest = BeginSignInRequest.builder()
-//                .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
-//                        .setSupported(true)
-//                        .build())
-                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                        .setSupported(true)
-                        // Your server's client ID, not your Android client ID.
-                        .setServerClientId(getString(R.string.default_web_client_id))
-                        // Only show accounts previously used to sign in.
-                        .setFilterByAuthorizedAccounts(false)
-                        .build())
-                .build();
 
-        GoogleSignInOptions gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestProfile()
                 .build();
-        GoogleSignInClient client= GoogleSignIn.getClient(this,gso);
-
-        findViewById(R.id.login_button).setOnClickListener(el -> loginUser());
+        googleClient = GoogleSignIn.getClient(this, gso);
     }
 
 
@@ -65,51 +42,38 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case REQ_ONE_TAP:
+            case RC_SIGN_IN:
                 try {
-                    SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(data);
-                    String idToken = credential.getGoogleIdToken();
-                    String username = credential.getId();
-                    String password = credential.getPassword();
-                    if (idToken != null) {
-                        // Got an ID token from Google. Use it to authenticate
-                        // with your backend.
-                        Log.d(TAG, "Got ID token.");
-                    } else if (password != null) {
-                        // Got a saved username and password. Use them to authenticate
-                        // with your backend.
-                        Log.d(TAG, "Got password.");
-                    }
-                } catch (ApiException e) {
-                    Log.e(TAG,e.getMessage());
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    handleSignInResult(task);
+                } catch (Exception ex) {
+
                 }
                 break;
         }
     }
 
+    private void signIn() {
+        Intent signInIntent = googleClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-    private void loginUser() {
-        oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener(this, new OnSuccessListener<BeginSignInResult>() {
-                    @Override
-                    public void onSuccess(BeginSignInResult result) {
-                        try {
-                            startIntentSenderForResult(
-                                    result.getPendingIntent().getIntentSender(), REQ_ONE_TAP,
-                                    null, 0, 0, 0);
-                        } catch (IntentSender.SendIntentException e) {
-                            Log.e(TAG, "Couldn't start One Tap UI: " + e.getLocalizedMessage());
-                        }
-                    }
-                })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // No saved credentials found. Launch the One Tap sign-up flow, or
-                        // do nothing and continue presenting the signed-out UI.
-                        Log.d(TAG, e.getLocalizedMessage());
-                    }
-                });
+
+            // Signed in successfully, show authenticated UI.
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            intent.putExtra("ACCOUNT_NAME", account.getDisplayName());
+            intent.putExtra("ACCOUNT_EMAIL", account.getEmail());
+            intent.putExtra("ACCOUNT_IMG_URL", account.getPhotoUrl());
+
+            startActivity(intent);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG,e.getMessage() );
+        }
     }
 
 
