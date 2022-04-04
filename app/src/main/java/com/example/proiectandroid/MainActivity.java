@@ -27,7 +27,12 @@ import com.example.proiectandroid.Fragments.TravelPlanningFragment;
 import com.example.proiectandroid.Fragments.VideoTutorialFragment;
 import com.example.proiectandroid.Services.LocationsService;
 import com.example.proiectandroid.Services.TravelService;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.stream.Collectors;
@@ -59,7 +64,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Update user name in nav bar
         TextView usernameView=navigationView.getHeaderView(0).findViewById(R.id.nav_header_username);
+        TextView emailView=navigationView.getHeaderView(0).findViewById(R.id.nav_header_email);
         usernameView.setText(getIntent().getStringExtra("ACCOUNT_NAME"));
+        emailView.setText(getIntent().getStringExtra("ACCOUNT_EMAIL"));
 
 
         // Search bar
@@ -107,6 +114,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 shareIntent.setAction(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_TEXT, data);
                 startActivity(shareIntent);
+                break;
+
+            case R.id.nav_logout:
+                // Handle google logout and redirect to login page
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build();
+                GoogleSignInClient googleClient = GoogleSignIn.getClient(this, gso);
+                googleClient.signOut()
+                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

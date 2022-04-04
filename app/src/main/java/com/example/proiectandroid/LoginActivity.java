@@ -31,11 +31,21 @@ public class LoginActivity extends AppCompatActivity {
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                .requestProfile()
                 .build();
         googleClient = GoogleSignIn.getClient(this, gso);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account!=null){
+            startMainActivity(account);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -57,23 +67,26 @@ public class LoginActivity extends AppCompatActivity {
         Intent signInIntent = googleClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-
             // Signed in successfully, show authenticated UI.
-            Intent intent = new Intent(getBaseContext(), MainActivity.class);
-            intent.putExtra("ACCOUNT_NAME", account.getDisplayName());
-            intent.putExtra("ACCOUNT_EMAIL", account.getEmail());
-            intent.putExtra("ACCOUNT_IMG_URL", account.getPhotoUrl());
-
-            startActivity(intent);
+            startMainActivity(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG,e.getMessage() );
+            Log.w(TAG, e.getMessage());
         }
+    }
+
+    private void startMainActivity(GoogleSignInAccount account){
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        intent.putExtra("ACCOUNT_NAME", account.getDisplayName());
+        intent.putExtra("ACCOUNT_EMAIL", account.getEmail());
+
+        startActivity(intent);
     }
 
 
